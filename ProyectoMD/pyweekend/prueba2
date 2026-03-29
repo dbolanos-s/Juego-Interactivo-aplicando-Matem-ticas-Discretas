@@ -1,0 +1,262 @@
+from PIL import Image, ImageDraw, ImageFont
+import time
+
+def resize_image(image, new_width=50):
+    width, height = image.size
+    aspect_ratio = height / width
+    new_height = int(new_width * aspect_ratio * 0.55)
+    return image.resize((new_width, new_height))
+
+def resize_text_image(image, new_width=60):
+    width, height = image.size
+    aspect_ratio = height / width
+    new_height = int(new_width * aspect_ratio)
+    return image.resize((new_width, new_height))
+
+def show_image_in_console(path, char="█", width=60):
+    try:
+        img = Image.open(path).convert("RGB")
+    except Exception as e:
+        print("❌ Error al abrir la imagen:", e)
+        return
+    img = resize_image(img, new_width=width)
+    for y in range(img.height):
+        line = ""
+        for x in range(img.width):
+            r, g, b = img.getpixel((x, y))
+            line += f"\033[38;2;{r};{g};{b}m{char}\033[0m"
+        print(line)
+
+def show_pil_image_in_console(img, char="█"):
+    for y in range(img.height):
+        line = ""
+        for x in range(img.width):
+            r, g, b = img.getpixel((x, y))
+            line += f"\033[38;2;{r};{g};{b}m{char}\033[0m"
+        print(line)
+
+def show_text_as_ascii(text, font_path, font_size=20):
+    img = create_text_image(text, font_path, font_size=font_size, bg=(0, 0, 0))
+    img = resize_text_image(img, new_width=60)
+    show_pil_image_in_console(img, char="█")
+
+def create_text_image(text, font_path, font_size=16, color=(255, 255, 255), bg=(0, 0, 0)):
+    font = ImageFont.truetype(font_path, font_size)
+    dummy_img = Image.new("RGB", (1, 1), bg)
+    draw = ImageDraw.Draw(dummy_img)
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+    img = Image.new("RGB", (text_width + 10, text_height + 10), bg)
+    draw = ImageDraw.Draw(img)
+    draw.text((5, 5), text, font=font, fill=color)
+    return img
+
+imagenes_facultades = {
+    "INTRO": r"C:\\Users\\salom\\Downloads\\pyweekend\\pyweekend\\Default_Finding_Polito_with_a_tortoise_wearing_glasses_emergin_1.jpg",
+    "CONTEXTO": r"C:\\Users\\salom\\Downloads\\pyweekend\\pyweekend\\Default_Espol_Universidad_depicted_in_a_vibrant_whimsical_pixe_0.jpg",
+    "FCNM": r"C:\\Users\\salom\\Downloads\\pyweekend\\pyweekend\\Default_A_vibrant_whimsical_illustration_of_a_fantastical_facu_1.jpg",
+    "FIEC": r"C:\Users\salom\Downloads\pyweekend\pyweekend\Default_Vibrant_pixel_art_depiction_of_the_Universidad_ESPOL_i_3.jpg",
+    "FIMCP": r"C:\\Users\\salom\\Downloads\\pyweekend\\pyweekend\\Flux_Dev_A_whimsical_fantasystyle_university_faculty_building__0.jpg",
+    "FADCOM": r"C:\\Users\\salom\\Downloads\\pyweekend\\pyweekend\\Flux_Dev_A_whimsical_magical_realist_scene_depicting_a_fantast_0.jpg",
+    "FCV": r"C:\\Users\\salom\\Downloads\\pyweekend\\pyweekend\\Flux_Dev_A_vibrant_and_elegant_magical_faculty_building_with_a_2.jpg",
+    "FCSH": r"C:\Users\salom\Downloads\pyweekend\pyweekend\Flux_Dev_A_whimsical_fantasyinspired_faculty_building_in_a_vib_3.jpg",
+    "FIMCM": r"C:\\Users\\salom\\Downloads\\pyweekend\\pyweekend\\Flux_Dev_A_majestic_elegantly_designed_faculty_building_with_a_0.jpg",
+    "FICT": r"C:\\Users\\salom\\Downloads\\pyweekend\\pyweekend\\Flux_Dev_A_majestic_sprawling_faculty_building_with_a_vibrant__0.jpg"
+}
+
+show_image_in_console(imagenes_facultades["INTRO"])
+
+ruta_fuente = r"C:\\Users\\salom\\Downloads\\pyweekend\\pyweekend\\PressStart2P.ttf"
+show_text_as_ascii("BIENVENIDO", ruta_fuente, font_size=20)
+
+print("\n>>> Estimado jugador, el juego consiste en explorar las facultades y acumular energía hasta encontrar un premio escondido en una facultad determinada. ¡Suerte!<<<\n")
+
+input("Presiona ENTER para comenzar tu aventura mágica...")
+
+print()
+show_image_in_console(imagenes_facultades["CONTEXTO"])
+
+intro_text = (
+    ">>> La Universidad ESPOL, Fundada sobre antiguos cimientos de sabiduría, "
+    "esta institución no solo forma profesionales, sino también héroes del conocimiento.\n"
+    "ESPOL guía a jóvenes aprendices a convertirse en maestros de la ciencia, la tecnología y la imaginación. <<<"
+)
+print(intro_text)
+
+
+
+# Variables iniciales
+energia = 50
+opcion = 1
+frasco_magico = 0
+
+
+
+# Inicio del juego
+energia = 50  # Energía inicial del jugador
+frasco_magico = 0
+opcion = 1
+
+while 0 < energia < 100 and opcion == 1:
+    print()
+    facultad = input("-> Ingresa la facultad que deseas explorar: ").upper()
+    print()
+    while facultad not in [
+        "EXPLORAR FCNM", "EXPLORAR FIEC", "EXPLORAR FIMCP", "EXPLORAR FADCOM",
+        "EXPLORAR FCV", "EXPLORAR FIMCM", "EXPLORAR FICT","EXPLORAR FCSH"
+    ]:
+        print("\n[!] Respuesta no válida!\n")
+        facultad = input("-> Ingresa la facultad que deseas explorar: ").upper()
+        print()
+
+    if facultad == "EXPLORAR FCNM":
+        facultad = "FCNM"
+        if facultad in imagenes_facultades:
+            show_image_in_console(imagenes_facultades[facultad], char="█", width=60)
+        print("BIENVENIDO A FCNM\n")
+        print(">>> Esta facultad forma científicos con poderes matemáticos y naturales <<<\n")
+        comando = input("🎯 Ingrese el siguiente comando DESBLOQUEAR PREGUNTA: ").upper()
+        print()
+        while comando != "DESBLOQUEAR PREGUNTA":
+            print("[!] Comando no válido\n")
+            comando = input("🎯 Ingrese el siguiente comando DESBLOQUEAR PREGUNTA: ").upper()
+            print()
+
+        respuesta = input("-> Menciona una carrera que tiene la Facultad FCNM: ").upper()
+        print()
+        while not respuesta.replace(" ", "").isalpha():
+            print("[!] Respuesta no válida\n")
+            respuesta = input("-> Menciona una carrera que tiene la Facultad FCNM: ").upper()
+            print()
+
+        if respuesta not in ['LOGISTICA', 'ESTADISTICA', 'INGENIERIA QUIMICA', 'MATEMATICAS']:
+            print("[!] Respuesta incorrecta!\n")
+            energia -= 10
+        else:
+            print("🎉 ¡Ganaste un frasco mágico!\n")
+            energia += 10
+            frasco_magico += 1
+    elif facultad == "EXPLORAR FCSH":
+        facultad = "FCSH"
+        if facultad in imagenes_facultades:
+            show_image_in_console(imagenes_facultades[facultad], char="█", width=60)
+        print("BIENVENIDO A FCSH\n")
+        print(">>> Esta facultad desarrolla habilidades en ciencias sociales, idiomas y humanidades <<<\n")
+        respuesta = input("-> Menciona las siglas del centro académico de inglés en ESPOL: ").lower()
+        print()
+        if respuesta.strip() == "celex":
+            print("✅ ¡Correcto! Has demostrado tus conocimientos en idiomas.\n")
+            energia += 15
+        else:
+            print("[!] Respuesta incorrecta. Sigue practicando tus idiomas.\n")
+            energia -= 10
+
+    elif facultad == "EXPLORAR FIEC":
+        facultad = "FIEC"
+        if facultad in imagenes_facultades:
+            show_image_in_console(imagenes_facultades[facultad], char="█", width=60)
+        print("BIENVENIDO A FIEC\n")
+        respuesta = input("-> ¿Deseas responder la pregunta? (si/no): ").lower()
+        print()
+        if respuesta == "si":
+            energia = 0
+        else:
+            energia += 15
+
+    elif facultad == "EXPLORAR FICT":
+        facultad = "FICT"
+        if facultad in imagenes_facultades:
+            show_image_in_console(imagenes_facultades[facultad], char="█", width=60)
+        print("BIENVENIDO A FICT\n")
+        respuesta = input("-> Menciona una carrera que contenga la Facultad: ").lower()
+        print()
+        if respuesta not in ['civil', 'minas', 'geología', 'petróleo', 'ing civil', 'ingenieria civil']:
+            energia = 0
+        else:
+            print("🎉 ¡Encontraste a Polito!\n")
+            energia = 100
+
+    elif facultad == "EXPLORAR FIMCP":
+        facultad = "FIMCP"
+        if facultad in imagenes_facultades:
+            show_image_in_console(imagenes_facultades[facultad], char="█", width=60)
+        print("BIENVENIDO A FIMCP\n")
+        respuesta = input("-> ¿Deseas responder la siguiente pregunta? (si/no): ").lower()
+        print()
+        if respuesta == 'si':
+            pregunta = input("¿Cuál es la carrera más demandada?: ").lower()
+            print()
+            if pregunta == 'mecatronica':
+                print("🎉 ¡Respuesta correcta!\n")
+                energia += 20
+            else:
+                print("[!] Respuesta incorrecta.\n")
+                energia -= 10
+        else:
+            print("➡️ Decidiste no responder la pregunta.\n")
+            energia += 5
+
+    elif facultad == "EXPLORAR FADCOM":
+        facultad = "FADCOM"
+        if facultad in imagenes_facultades:
+            show_image_in_console(imagenes_facultades[facultad], char="█", width=60)
+        print("BIENVENIDO A FADCOM\n")
+        opcion1 = input("-> Elija una opción: (Creatividad/Habilidad): ").upper()
+        print()
+        if opcion1 == "CREATIVIDAD":
+            respuesta = input("Menciona el tono de color representativo de la facultad: ").lower()
+            print()
+            if respuesta in ["rosa", "rosado"]:
+                energia += 20
+            else:
+                energia -= 10
+        elif opcion1 == "HABILIDAD":
+            respuesta = input("Mencione una carrera de esta facultad: ").upper()
+            print()
+            if respuesta in ["DISEÑO DE PRODUCTOS", "DISEÑO GRAFICO", "COMUNICACION"]:
+                energia += 20
+            else:
+                energia -= 10
+
+    elif facultad == "EXPLORAR FCV":
+        facultad = "FCV"
+        if facultad in imagenes_facultades:
+            show_image_in_console(imagenes_facultades[facultad], char="█", width=60)
+        print("BIENVENIDO A FCV\n")
+        respuesta = input("¿Desea responder la siguiente pregunta? (si/no): ").lower()
+        print()
+        if respuesta == "si":
+            pregunta = input("-> ¿Qué animal mágico protege esta facultad?: ").lower()
+            print()
+            if pregunta in ["llama", "la llama", "una llama"]:
+                print("🎉 ¡Encontraste a Polito!\n")
+                energia = 100
+            else:
+                print("[!] Respuesta incorrecta. Polito no está aquí.\n")
+                energia -= 10
+        else:
+            print("➡️ Continúa buscando a Polito...\n")
+
+    elif facultad == "EXPLORAR FIMCM":
+        print("⚠️ Esta facultad aún está en construcción... intenta con otra.\n")
+
+    print(f"⚡ Energía actual: {energia}%\n")
+
+    if energia >= 100:
+        print("🎉 ¡GANASTE EL JUEGO!")
+        break
+    elif energia <= 0:
+        print("💀 GAME OVER: Te quedaste sin energía")
+        break
+
+    opcion_input = input("¿Deseas continuar explorando? (1 = Sí / 0 = No): ")
+    while opcion_input not in ["0", "1"]:
+        opcion_input = input("Respuesta no válida. ¿Deseas continuar explorando? (1 = Sí / 0 = No): ")
+    opcion = int(opcion_input)
+
+print("\nFIN DEL JUEGO")
+print()
+print(f"-> Tu energía final fue: {energia}%")
+print()
+print(f"-> Frascos mágicos obtenidos: {frasco_magico}")
