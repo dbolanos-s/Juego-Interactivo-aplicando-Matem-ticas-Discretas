@@ -1,49 +1,75 @@
-# 🎮 Juego Interactivo de Matemáticas Discretas
+# Juego Interactivo de Matemáticas Discretas
 
-Este proyecto consiste en un juego educativo desarrollado en **Python**, ejecutado en consola, que aplica conceptos clave de **Matemáticas Discretas** de forma interactiva y dinámica.
-<img width="1120" height="1100" alt="image" src="https://github.com/user-attachments/assets/8224ef0d-022c-4bf2-8409-3b45d57ffab9" />
-
----
-
-## 🧠 Descripción
-
-El juego permite recorrer distintas facultades representadas como nodos de un grafo.  
-El jugador debe tomar decisiones, responder preguntas y optimizar su recorrido utilizando conceptos matemáticos.
-
-El proyecto fue diseñado primero en **PSeInt (pseudocódigo)** y luego implementado en **Python**.
+Proyecto educativo desarrollado en Python que aplica conceptos de matemáticas discretas mediante un juego interactivo en consola.
 
 ---
 
-## 🎯 Objetivo
+## 🖥️ Visualización
 
-Desarrollar un juego interactivo que permita aplicar:
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8224ef0d-022c-4bf2-8409-3b45d57ffab9" width="80%">
+</p>
 
-- Lógica proposicional 🔎  
-- Estructuras condicionales ⚙️  
-- Ciclos 🔁  
-- Grafos 📊  
-- Árbol de expansión mínima 🌳  
-- Ciclo de Hamilton 🔄  
+**Figura 1.** Interfaz del juego en consola con representación del sistema de recorrido y decisiones del usuario.
 
 ---
 
-## 🧩 Características
+## Descripción
 
-- 🖥️ Juego en consola
-- 🧠 Retos basados en lógica
-- 📊 Uso de grafos como mapa del recorrido
-- 🌳 Ruta óptima mediante árbol de expansión mínima
-- 🔄 Recorrido completo con ciclo de Hamilton
-- 🎨 Representación visual con caracteres especiales
-- ⚡ Sistema de energía del jugador
+El juego modela un entorno donde distintas facultades son representadas como nodos dentro de un grafo.  
+El usuario debe desplazarse entre ellas tomando decisiones, resolviendo retos lógicos y optimizando su recorrido.
+
+El desarrollo se realizó inicialmente en pseudocódigo utilizando PSeInt y posteriormente se implementó en Python.
 
 ---
 
-## 🛠️ Tecnologías
+## Objetivo
 
-- Python 🐍  
-- PSeInt 📘  
-- NetworkX 📊  
-- Matplotlib 📈  
+Aplicar conceptos fundamentales de matemáticas discretas en un entorno práctico e interactivo, permitiendo:
+
+- Comprender estructuras de grafos  
+- Optimizar recorridos  
+- Aplicar lógica computacional en la toma de decisiones  
 
 ---
+
+## Conceptos implementados
+
+- Lógica proposicional  
+- Estructuras condicionales  
+- Ciclos iterativos  
+- Grafos  
+- Árbol de expansión mínima (MST)  
+- Ciclo de Hamilton  
+
+---
+
+## Funcionalidades
+
+- Sistema de navegación basado en grafos  
+- Retos lógicos interactivos  
+- Cálculo de rutas óptimas  
+- Simulación de recorrido completo del grafo  
+- Sistema de energía del jugador  
+- Representación visual en consola  
+
+---
+
+## Tecnologías utilizadas
+
+- Python  
+- PSeInt  
+- NetworkX  
+- Matplotlib  
+
+---
+
+## Resultados
+
+El proyecto permite aplicar conceptos teóricos de matemáticas discretas en un contexto práctico, facilitando la comprensión de grafos y algoritmos mediante interacción directa.
+
+---
+
+## Autor
+
+Domenica Bolaños
